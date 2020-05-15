@@ -1,0 +1,26 @@
+html
+    body
+        video#myVideo(controls='')
+        // Use HLS.js to support the HLS format in browsers.
+        script(src='https://cdn.jsdelivr.net/npm/hls.js@0.8.2')
+        script.
+            (function(){
+                // Replace with your asset's playback ID
+                var playbackId = "WqFB75EjUSJtTHxCaAZoRUMYcTLdoepRKjnrUqi6UKo";
+                var url = `https://stream.mux.com/${playbackId}.m3u8`;
+                var config = {
+                    autoStartLoad: true,
+                    startPosition : -1,
+                    debug: true,
+                }
+                // HLS.js-specific setup code
+                if (Hls.isSupported()) {
+                    var video = document.getElementById("myVideo");
+                    var hls = new Hls(config);
+                    hls.loadSource(url);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        video.play();
+                    })
+                }
+            })();
